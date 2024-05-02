@@ -47,7 +47,7 @@ while running:
             velocity = jump_height
         rect
 
-    else:
+    
             
         
 
