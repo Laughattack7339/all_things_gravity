@@ -1,6 +1,7 @@
 
 import pygame
 pygame.init()
+import time
 
 
 width = 1000
@@ -13,49 +14,53 @@ background = pygame.image.load('testing_back.png').convert_alpha()
 
 jumping = False
 jump_key_pressed = False
-
-player_x = 300
-player_y = 442
-player = pygame.Rect(player_x, player_y, 50, 50)
+player_image = pygame.image.load("robo_cycle.png")
+player_rect = player_image.get_rect(midbottom=(442, 609))
+question_block = pygame.image.load("question_block.png")
+queston_rect = question_block.get_rect(midbottom=(442, 609))
+player_x = 442
+player_y = 500
 gravity = 1
 jump_height = 20
 velocity = jump_height
 start_time = pygame.time.get_ticks()
+clock = pygame.time.Clock()
 
 
 while running:
-    
-    
     screen.blit(background, (0, 0))
-    rect= pygame.draw.rect(screen, (48, 3, 252), player)
 
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_SPACE]:
-        jumping = True
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and not jumping:
+                jumping = True
+                print(player_rect.bottom)
+                print(jumping)
 
     if jumping:
-        player_y -= velocity
+        player_rect.y -= velocity
         velocity -= gravity
         if velocity < -jump_height:
-            jumping = False
             velocity = jump_height
-        rect
+            jumping = False
+
+   
 
     
+
+    
+        
             
         
 
-    
+    screen.blit(question_block, queston_rect)
+    screen.blit(player_image, player_rect)
 
-    player.topleft = (player_x, player_y)
     pygame.display.flip()
-
+    clock.tick(60)
 pygame.quit()
 
 
